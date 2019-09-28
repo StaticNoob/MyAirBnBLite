@@ -1,0 +1,25 @@
+
+{#-- Template Inheritance (w/ Jinja2) #}
+{#-- Child Template #}
+{% extends "layout.html" %}
+
+<!-- Jinja block called "content" -->
+{% block content %}
+    
+
+    <!-- Jinja for block here -->
+    {% for post in posts %} 
+        <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="#">Leased by {{ post.renter }}</a>
+                <small class="text-muted">on {{ post.post_date }}</small>
+              </div>
+              <h2><a class="article-title" href="#">{{ post.house_type }} in {{ post.city }}</a></h2>
+              <p class="article-content">${{ post.cost_daily }} per day</p>
+            </div>
+        </article>
+
+    {% endfor %}
+
+{% endblock content %}
