@@ -1,0 +1,113 @@
+
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="content-section">
+
+        <form method="POST" action="{{ url_for('postNewProperty')}}">
+
+            {{ form.hidden_tag() }}
+
+            <fieldset class="form-group">  <!-- bootstrap classes -->
+                
+                <!-- legend tag sets caption for fieldset element -->
+                <legend class="border-bottom mb-4">Post New Property</legend>
+                <div class="form-group">
+
+                        <!-- wtform Field method to create html label tag,
+                             parameters are tag attributes -->
+                    {{ form.post_title.label(class="form-control-label") }}
+
+                    {% if form.post_title.errors %}
+                        {{ form.post_title(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.post_title.errors %}
+                                <span>{{ error }}</span> 
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    
+                        <!-- object.property() returns the object (which is a StringField)-->
+                        {{ form.post_title(class="form-control form-control-lg")}}
+                        <!-- REMINDER: ALL VARIABLES IN PYTHON ARE OBJECTS -->
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    {{ form.house_type.label(class="form-control-label") }}
+
+                    {% if form.house_type.errors %}
+                        {{ form.house_type(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.house_type.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                         {{ form.house_type(class="form-control form-control-lg")}}
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    {{ form.city.label(class="form-control-label") }}
+                    
+                    {% if form.city.errors %}
+                        {{ form.city(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.city.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.city(class="form-control form-control-lg")}}
+                    {% endif %}
+
+                </div>
+                
+               <div class="form-group">
+                    {{ form.daily_price.label(class="form-control-label") }}
+
+                    {% if form.daily_price.errors %}
+                        {{ form.daily_price(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.daily_price.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.daily_price(class="form-control form-control-lg")}}
+                    {% endif %}
+
+               </div>
+               <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg")}}
+                    {% endif %}
+
+               </div>
+            </fieldset>
+
+            <div class="form-group">
+                    <!-- Creates Button -->
+                    {{ form.submit(class="btn btn-outline-info")}}
+
+                    <a href="{{ url_for('home')}}" class="btn btn-default">Cancel</a>
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock content %}
+

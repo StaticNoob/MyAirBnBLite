@@ -39,6 +39,8 @@
                     <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
                     <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                    <a class="ml-3 btn btn-light" href="{{ url_for('postNewProperty') }}">Post Property</a>
+                    
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
@@ -60,10 +62,12 @@
                         {% for category, message in messages %} <!-- for loop in case of multiple flashes-->
                             <div class="alert alert-{{ category }}">
                                 {{ message }}
+
                             </div>
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
+                
                 <!-- block called "content" from child templates will go here -->
                 {% block content %}{% endblock %}
                 

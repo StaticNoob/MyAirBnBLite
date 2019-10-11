@@ -1,10 +1,17 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import RegistrationForm, LoginForm
+from flask import Flask, render_template, url_for, flash, redirect, request
+from forms import RegistrationForm, LoginForm, NewPropertyForm
+from pymongo import MongoClient
+
 app = Flask(__name__)
 
 # Keep this secret! Securely signs session cookie 
 app.config['SECRET_KEY'] = 'de88ba613c5b497dbe8d9ae73b070d78'
 #   ^^^^ Dictionary called config 
+
+# default host and port
+client = MongoClient('localhost', 27017)
+
+db = client.testdatabase
 
 # temp database
 postings = [
@@ -67,6 +74,37 @@ def login():
             flash("Login Unsuccessful. Check username and password.", 'danger')
     return render_template('login.html', title='Login', form=form)
     # form=form gives template access to the form made in register()
+
+@app.route("/postNewProperty", methods=['GET', 'POST'])
+def postNewProperty(): 
+    form = NewPropertyForm()
+
+    if request.method == 'POST':
+
+        if form.validate_on_submit():
+            flash("Post Successfully Submitted!", 'success')
+
+            post = {
+                "postTitle": request.form['post_title'],
+                "houseType": request.form['house_type'],
+                "city": request.form['city'],
+                "dailyPrice": request.form['daily_price'],
+                "description": request.form["description"]
+            }
+
+            # New collection in Mongo database called 'posts'
+            posts = db.properties
+            # Insert 'post' into collection posts
+            posts.insert_one(post)
+
+            return redirect(url_for("home"))
+        else:
+            flash("Post Unsuccessful", 'danger')
+
+    
+
+    return render_template('postNewProperty.html', title='New Property', form=form)
+
    
 
 
