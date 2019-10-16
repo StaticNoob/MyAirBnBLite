@@ -12,11 +12,11 @@
         <article class="media content-section">
             <div class="media-body">
               <div class="article-metadata">
-                <a class="mr-2" href="#">Leased by {{ post.renter }}</a>
-                <small class="text-muted">on {{ post.post_date }}</small>
+                <a class="mr-2" href="#">{{ post.houseType }} in {{ post.city }}</a>
+                <small class="text-muted"> for ${{ post.dailyPrice }} per day</small>
               </div>
-              <h2><a class="article-title" href="#">{{ post.house_type }} in {{ post.city }}</a></h2>
-              <p class="article-content">${{ post.cost_daily }} per day</p>
+              <h2><a class="article-title" href="#">{{ post.postTitle }}</a></h2>
+              <p class="article-content">{{ post.description }} </p>
             </div>
         </article>
 

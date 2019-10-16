@@ -8,40 +8,23 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'de88ba613c5b497dbe8d9ae73b070d78'
 #   ^^^^ Dictionary called config 
 
-# default host and port
+# Client initialized with default host and port
 client = MongoClient('localhost', 27017)
 
-db = client.testdatabase
+# Database created called 'postings'
+db = client.postings
 
-# temp database
-postings = [
-
-    {
-        "renter": "Ryan",
-        "house_type": "Apartment",
-        "city": "Seattle",
-        "cost_daily": "60",
-        "post_date": "9/3/19"
-    }, 
-    {
-        "renter": "Colin",
-        "house_type": "House",
-        "city": "Putney",
-        "cost_daily": "45",
-        "post_date": "7/23/19"
-
-    }  
-
-]
-
+# New collection in 'postings' database called 'posts'
+posts = db.posts
 
 # HOME PAGE
 # Both routes handled by home() function
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html", posts=postings)
-    # posts=postings gives template access to variables(in postings)
+    return render_template("home.html", posts=posts.find())
+    # posts=posts.find() gives template access to all documents in collection 'posts'
+    # collection.find() queries all documents in collection into a list
 
 
 
@@ -84,6 +67,7 @@ def postNewProperty():
         if form.validate_on_submit():
             flash("Post Successfully Submitted!", 'success')
 
+            # Requesting values from form and put into dictionary called 'post'
             post = {
                 "postTitle": request.form['post_title'],
                 "houseType": request.form['house_type'],
@@ -92,8 +76,6 @@ def postNewProperty():
                 "description": request.form["description"]
             }
 
-            # New collection in Mongo database called 'posts'
-            posts = db.properties
             # Insert 'post' into collection posts
             posts.insert_one(post)
 
